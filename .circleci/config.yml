@@ -5,7 +5,7 @@ jobs:
       - image: fr3akyphantom/droid-builder:latest
     environment:
       MANIFEST_BRANCH: 'twrp-6.0'
-      PBRP_BRANCH: 'features'
+      PBRP_BRANCH: 'android-6.0'
       VERSION: '2.9.0'
       VENDOR: 'LYF'
       CODENAME: 'panda01a'
@@ -17,15 +17,12 @@ jobs:
       - run:
           name: AIO Build
           command: |
-            sudo apt-get install -y tar
-            echo "Set GitAuth Infos too"
+            echo "Set GitAuth Infos"
             git config --global user.email $GitHubMail
             git config --global user.name $GitHubName
             git config --global color.ui true
-            export TEST_BUILD=true
             wget -q https://raw.githubusercontent.com/PitchBlackRecoveryProject/vendor_pb/pb/build.sh
-            sed -i "s:GITHUB_TOKEN@github.com\/PitchBlackRecoveryProject:GITHUB_TOKEN@github.com\/AndroiableDroid:g" build.sh
-            source build.sh ${SFUserName} ${SFPassword} ${GITHUB_TOKEN}
+            source build.sh
 workflows:
   version: 2
   build_and_test:
@@ -34,4 +31,4 @@ workflows:
           filters:
             branches:
               only: "android-6.0"
-          context: upload
+          context: org-global
